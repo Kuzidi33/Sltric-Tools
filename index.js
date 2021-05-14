@@ -2,22 +2,9 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const chalk = require('chalk');
 const fs = require('fs');
+const Prefix = "*"
 const config = require('./config.json');
 const { prefix, token } = require('./config.json');
-/*  LIER DOSSIER CMD  */
-client.commands = new Discord.Collection();
-client.commands.set(command.name,command);
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
-for (const file of commandFiles) {
-	const command = require(`./cmd/${file}`);
-	client.commands.set(command.name, command);
-}
-const commandFiles = fs.readdirSync(`./cmd`).filter(file => file.endsWith('.js'));
-for(const file of commandFiles){
-    const command = require(`./cmd/${file}`);
-    client.commands.set(command.name,command);
-}
 
   client.on('ready', msg => {
   console.log("");                                   
@@ -51,20 +38,6 @@ for(const file of commandFiles){
 
 client.on('message',  msg => {
 
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
-
-	const args = message.content.slice(prefix.length).trim().split(/ +/);
-	const command = args.shift().toLowerCase();
-
-	if (!client.commands.has(command)) return;
-
-	try {
-		client.commands.get(command).execute(message, args);
-	} catch (error) {
-		console.error(error);
-		message.reply('there was an error trying to execute that command!');
-	}
-  /*                   CMD LIAGE                                           */
     if (msg.guild && msg.content.startsWith('*pmeveryone')) {
       msg.delete();
       let text = msg.content.slice('*pmeveryone'.length);
