@@ -5,6 +5,11 @@ const fs = require('fs');
 const Prefix = "*"
 const config = require('./config.json');
 const { prefix, token } = require('./config.json');
+const commandFiles = fs.readdirSync(`./cmd`).filter(file => file.endsWith('.js'));
+for(const file of commandFiles){
+    const command = require(`./cmd/${file}`);
+    client.commands.set(command.name,command);
+}
 
   client.on('ready', msg => {
   console.log("");                                   
